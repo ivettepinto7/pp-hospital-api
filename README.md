@@ -8,7 +8,7 @@ git clone https://github.com/ivettepinto7/pp-hospital-api
 
 2. Crear una base de datos PostgreSQL con el nombre **hospital_db**
 3. En el directorio **src/main** crear el directorio **resources**
-4. Dentro de **src/main/resources** crear el archivo **appplication.properties** con el siguiente contenido:
+4. Dentro de **src/main/resources** crear el archivo **application.properties** con el siguiente contenido:
 ```
 spring.jpa.database=POSTGRESQL
 
