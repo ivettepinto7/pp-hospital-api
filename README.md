@@ -38,3 +38,7 @@ logging.level.org.springframework.security=DEBUG
 
 spring.sendgrid.api-key=<API-KEY>
 ```
+
+5. Ejecutar el script de la base de datos
+6. Abrir el proyecto en el IDE de preferencia
+7. Correr el proyecto
