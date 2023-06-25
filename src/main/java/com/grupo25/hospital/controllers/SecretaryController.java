@@ -157,6 +157,30 @@ public class SecretaryController {
 					);
 		}
 	}
+
+	@GetMapping("/appointments/today")
+	public ResponseEntity<?> getTodayAppointments(){
+		LocalDateTime timestamp = (LocalDate.now().atStartOfDay());
+		LocalDateTime timestamp2 = (timestamp.plusDays(1)).truncatedTo(ChronoUnit.DAYS);
+		try {
+			List<Appointment> appointments = appointmentService.findTodayAppointments(timestamp.truncatedTo(ChronoUnit.DAYS), timestamp2);
+			
+			if(appointments.size() == 0) {
+				return new ResponseEntity<>(
+						new MessageDTO("No hay citas para hoy"),
+						HttpStatus.NOT_FOUND
+					);
+			}
+			
+			return new ResponseEntity<>(
+					appointments,
+					HttpStatus.OK
+				);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@PutMapping("/my-info/updatepassword")
 	public ResponseEntity<?> updateOwnPassword(@Valid @RequestBody UpdatePassDTO newPassInfo, BindingResult result){
