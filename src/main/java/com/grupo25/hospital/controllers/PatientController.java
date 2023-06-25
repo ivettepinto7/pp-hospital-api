@@ -299,6 +299,13 @@ public class PatientController {
 			
 			
 			Appointment_type type = appService.findOneById(newSchedule.getType()); 
+			if(type ==null) {
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Tipo de cita inválido"),
+						HttpStatus.BAD_REQUEST
+					);
+			}
+			
 			//Id de doctor se asigna hasta que el doctor atiende a la persona en una consulta.
 			if(type.getId_appointment_type() == 1) {
 				Vaccine vaccine = vaccService.findOneById(newSchedule.getIdVAT());
@@ -346,6 +353,7 @@ public class PatientController {
 						HttpStatus.CREATED
 					);
 			}
+			
 			return new ResponseEntity<MessageDTO>(
 					new MessageDTO("Tipo de cita inválido"),
 					HttpStatus.BAD_REQUEST
