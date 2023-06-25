@@ -301,8 +301,13 @@ public class PatientController {
 			Appointment_type type = appService.findOneById(newSchedule.getType()); 
 			//Id de doctor se asigna hasta que el doctor atiende a la persona en una consulta.
 			if(type.getId_appointment_type() == 1) {
-				System.out.println(newSchedule.getType()+"   "+ newSchedule.getIdVAT()+ "    "+ newSchedule.getDate());
 				Vaccine vaccine = vaccService.findOneById(newSchedule.getIdVAT());
+				if (vaccine == null ) {
+					return new ResponseEntity<MessageDTO>(
+							new MessageDTO("Tipo de vacuna inválido"),
+							HttpStatus.BAD_REQUEST
+						);
+				}
 				appointmentService.registerInmu(newSchedule, type, vaccine, foundPerson);
 				return new ResponseEntity<MessageDTO>(
 						new MessageDTO("Cita agendada"),
@@ -311,6 +316,12 @@ public class PatientController {
 			}
 			if(type.getId_appointment_type() == 2) {
 				Area area = areaService.findOneById(newSchedule.getIdVAT());
+				if (area == null ) {
+					return new ResponseEntity<MessageDTO>(
+							new MessageDTO("Tipo de cita inválido"),
+							HttpStatus.BAD_REQUEST
+						);
+				}
 				
 				appointmentService.registerArea(newSchedule, type, area, foundPerson);
 				
@@ -321,7 +332,12 @@ public class PatientController {
 			}
 			if(type.getId_appointment_type() == 3) {
 				Test test = testService.findOneById(newSchedule.getIdVAT());
-				
+				if (test == null ) {
+					return new ResponseEntity<MessageDTO>(
+							new MessageDTO("Tipo de test inválido"),
+							HttpStatus.BAD_REQUEST
+						);
+				}
 				
 				appointmentService.registerTest(newSchedule, type, test, foundPerson);
 				
