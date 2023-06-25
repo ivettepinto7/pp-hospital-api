@@ -18,6 +18,7 @@ import com.grupo25.hospital.models.entities.Appointment_type;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Test;
+import com.grupo25.hospital.models.entities.Vaccine;
 import com.grupo25.hospital.repositories.AppointmentRepository;
 import com.grupo25.hospital.services.AppointmentService;
 
@@ -29,15 +30,17 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void registerInmu(ScheduleAppointmentDTO newSchedule, Appointment_type type, Person person)
+	public void registerInmu(ScheduleAppointmentDTO newSchedule, Appointment_type type,Vaccine vaccine, Person person)
 			throws Exception {
 		Appointment appointment = new Appointment();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 		appointment.setStatus(false);
+		appointment.setId_vaccine(vaccine);
 		appointment.setId_appointment_type(type);
 		appointment.setId_patient(person);
 		appointment.setTimestamp(LocalDateTime.parse(newSchedule.getDate(), formatter));
+		
 		
 		appointmentRepo.save(appointment);
 	}

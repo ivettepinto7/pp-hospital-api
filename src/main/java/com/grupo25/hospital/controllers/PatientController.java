@@ -194,9 +194,9 @@ public class PatientController {
 		try {
 			
 			Person paciente = personService.getPersonAuthenticated();
-			
+			System.out.println("AAAAAAAA");
 			List<Appointment> inmunizationList = inmuService.getAppointmentsByID(paciente.getId_person());
-						
+			System.out.println("BBBBBBB");			
 			if(inmunizationList.size() == 0) {
 				return new ResponseEntity<>(
 						new MessageDTO("No hay inmunizaciones aplicadas"),
@@ -284,4 +284,61 @@ public class PatientController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping("schedule-appointment")
+	public ResponseEntity<?> bookAppointment(@Valid @RequestBody ScheduleAppointmentDTO newSchedule, BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Person foundPerson = personService.getPersonAuthenticated();
+			
+			
+			Appointment_type type = appService.findOneById(newSchedule.getType()); 
+			//Id de doctor se asigna hasta que el doctor atiende a la persona en una consulta.
+			if(type.getId_appointment_type() == 1) {
+				System.out.println(newSchedule.getType()+"   "+ newSchedule.getIdVAT()+ "    "+ newSchedule.getDate());
+				Vaccine vaccine = vaccService.findOneById(newSchedule.getIdVAT());
+				appointmentService.registerInmu(newSchedule, type, vaccine, foundPerson);
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			if(type.getId_appointment_type() == 2) {
+				Area area = areaService.findOneById(newSchedule.getIdVAT());
+				
+				appointmentService.registerArea(newSchedule, type, area, foundPerson);
+				
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			if(type.getId_appointment_type() == 3) {
+				Test test = testService.findOneById(newSchedule.getIdVAT());
+				
+				
+				appointmentService.registerTest(newSchedule, type, test, foundPerson);
+				
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			return new ResponseEntity<MessageDTO>(
+					new MessageDTO("Tipo de cita inválido"),
+					HttpStatus.BAD_REQUEST
+				);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+			HttpStatus.INTERNAL_SERVER_ERROR);
 }
+		}
+	}
+

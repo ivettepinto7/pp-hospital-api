@@ -63,6 +63,10 @@ public class Appointment {
 	@JoinColumn(name = "id_test", nullable = true)
 	private Test id_test;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_vaccine", nullable = true)
+	private Vaccine id_vaccine;
+	
 	@OneToMany(mappedBy = "id_appointment", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
 	@JsonIgnore
 	private List<Appointment> appointments;
@@ -70,7 +74,7 @@ public class Appointment {
 
 	public Appointment(Person id_patient, Person id_doctor, LocalDateTime timestamp, Boolean status,
 			String appointment_details, Appointment_type id_appointment_type, Inmunization id_inmunization,
-			Area id_area, Test id_test) {
+			Area id_area, Test id_test,Vaccine id_vaccine ) {
 		super();
 		this.id_patient = id_patient;
 		this.id_doctor = id_doctor;
@@ -81,6 +85,7 @@ public class Appointment {
 		this.id_inmunization = id_inmunization;
 		this.id_area = id_area;
 		this.id_test = id_test;
+		this.id_vaccine = id_vaccine;
 	}
 
 	
@@ -190,6 +195,19 @@ public class Appointment {
 
 	public void setId_area(Area id_area) {
 		this.id_area = id_area;
+	}
+	
+
+
+
+	public Vaccine getId_vaccine() {
+		return id_vaccine;
+	}
+
+
+
+	public void setId_vaccine(Vaccine id_vaccine) {
+		this.id_vaccine = id_vaccine;
 	}
 
 

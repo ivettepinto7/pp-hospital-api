@@ -11,9 +11,10 @@ import com.grupo25.hospital.models.entities.Appointment_type;
 import com.grupo25.hospital.models.entities.Area;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Test;
+import com.grupo25.hospital.models.entities.Vaccine;
 
 public interface AppointmentService {
-	void registerInmu(ScheduleAppointmentDTO newSchedule,Appointment_type type, Person person) throws Exception;
+	void registerInmu(ScheduleAppointmentDTO newSchedule,Appointment_type type,Vaccine vaccine, Person person) throws Exception;
 	void registerArea(ScheduleAppointmentDTO newSchedule,Appointment_type type,Area area, Person person) throws Exception;
 	void registerTest(ScheduleAppointmentDTO newSchedule,Appointment_type type,Test test, Person person) throws Exception;
 	
