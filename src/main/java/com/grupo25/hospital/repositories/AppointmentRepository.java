@@ -12,7 +12,7 @@ import com.grupo25.hospital.models.entities.Appointment;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
 
-	@Query(value = "SELECT * FROM appointment  WHERE appointment_time between ':start' and ':end' ", nativeQuery = true)
+	@Query(value = "SELECT * FROM appointment  WHERE appointment_time between :start and :end ", nativeQuery = true)
 	List<Appointment> findAllByTimestampToday(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
 

@@ -37,7 +37,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 		appointment.setStatus(false);
-		appointment.setId_vaccine(vaccine);
+		//appointment.setId_vaccine(vaccine);
 		appointment.setId_appointment_type(type);
 		appointment.setId_patient(person);
 		appointment.setTimestamp(LocalDateTime.parse(newSchedule.getDate(), formatter));

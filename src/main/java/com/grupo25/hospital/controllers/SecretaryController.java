@@ -3,6 +3,7 @@ package com.grupo25.hospital.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +161,9 @@ public class SecretaryController {
 
 	@GetMapping("/appointments/today")
 	public ResponseEntity<?> getTodayAppointments() throws Exception{
-		LocalDate timestamp = LocalDate.now();
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		 String date = "22/09/2022";
+		 LocalDate timestamp = LocalDate.parse(date, formatter);
 		LocalDate timestamp2 = timestamp.plusDays(1);
 		try {
 			System.out.println("-----------------------------------------------------------");
