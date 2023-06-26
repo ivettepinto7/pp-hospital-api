@@ -162,26 +162,10 @@ public class SecretaryController {
 	@GetMapping("/appointments/today")
 	public ResponseEntity<?> getTodayAppointments() throws Exception{
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		 String date = "22/09/2022";
-		 LocalDate timestamp = LocalDate.parse(date, formatter);
-		LocalDate timestamp2 = timestamp.plusDays(1);
+		 LocalDate timestamp = LocalDate.now();
+		 LocalDate timestamp2 = timestamp.plusDays(1);
 		try {
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println(timestamp);
-			System.out.println(timestamp2);
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
 			List<Appointment> appointments = appointmentService.findTodayAppointmentsOscar(timestamp, timestamp2);
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println(appointments);
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
-			System.out.println("-----------------------------------------------------------");
 			
 			if(appointments.size() == 0) {
 				return new ResponseEntity<>(
@@ -262,6 +246,7 @@ public class SecretaryController {
 				);
 			
 		} catch (Exception e) {
+			System.out.println(e);
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
