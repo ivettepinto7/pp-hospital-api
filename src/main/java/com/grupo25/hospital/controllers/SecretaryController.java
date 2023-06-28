@@ -3,6 +3,7 @@ package com.grupo25.hospital.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,6 +156,99 @@ public class SecretaryController {
 						null,
 						HttpStatus.INTERNAL_SERVER_ERROR
 					);
+		}
+	}
+
+	@GetMapping("/appointments/today")
+	public ResponseEntity<?> getTodayAppointments() throws Exception{
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		 LocalDate timestamp = LocalDate.now();
+		 LocalDate timestamp2 = timestamp.plusDays(1);
+		try {
+			List<Appointment> appointments = appointmentService.findTodayAppointmentsOscar(timestamp, timestamp2);
+			
+			if(appointments.size() == 0) {
+				return new ResponseEntity<>(
+						new MessageDTO("No hay citas para hoy"),
+						HttpStatus.NOT_FOUND
+					);
+			}
+			
+			return new ResponseEntity<>(
+					appointments,
+					HttpStatus.OK
+				);
+		} catch (Exception e) {
+			System.out.println("ERRRRRRRRRRROR"+e+"--");
+			return new ResponseEntity<>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	
+	@PostMapping("/schedule-appointment")
+	public ResponseEntity<?> bookAppointment(@Valid @RequestBody SecretaryScheduleAppointmentDTO newSchedule,BindingResult result){
+		try {
+			if(result.hasErrors()) {
+				String errors = result.getAllErrors().toString();
+				return new ResponseEntity<>(
+						new MessageDTO("Errores en validacion" + errors),
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			Person foundPerson = personService.findOneByIdentifier(newSchedule.getUsername());
+			
+			if(foundPerson == null) {
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Persona no encontrada"),
+						HttpStatus.NOT_FOUND
+					);
+			}
+			
+			Appointment_type type = appService.findOneById(newSchedule.getType()); 
+			///////////////////Id de doctor se asigna hasta que el doctor atiende a la persona
+			
+			if(type.getId_appointment_type() == 1) {
+				Vaccine vaccine = vaccService.findOneById(newSchedule.getIdVAT());
+				
+				appointmentService.registerSInmu(newSchedule, type, foundPerson);
+				
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			if(type.getId_appointment_type() == 2) {
+				Area area = areaService.findOneById(newSchedule.getIdVAT());
+		    	
+				
+				appointmentService.registerSArea(newSchedule, type, area, foundPerson);
+				
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			if(type.getId_appointment_type() == 3) {
+				Test test = testService.findOneById(newSchedule.getIdVAT());
+				
+				appointmentService.registerSTest(newSchedule, type, test, foundPerson);
+				
+				return new ResponseEntity<MessageDTO>(
+						new MessageDTO("Cita agendada"),
+						HttpStatus.CREATED
+					);
+			}
+			
+			return new ResponseEntity<MessageDTO>(
+					new MessageDTO("Tipo de cita inválido"),
+					HttpStatus.BAD_REQUEST
+				);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

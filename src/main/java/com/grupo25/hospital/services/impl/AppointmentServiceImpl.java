@@ -1,6 +1,7 @@
 package com.grupo25.hospital.services.impl;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 		appointment.setStatus(false);
-		appointment.setId_vaccine(vaccine);
+		//appointment.setId_vaccine(vaccine);
 		appointment.setId_appointment_type(type);
 		appointment.setId_patient(person);
 		appointment.setTimestamp(LocalDateTime.parse(newSchedule.getDate(), formatter));
@@ -126,6 +127,11 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Override
 	public List<Appointment> findTodayAppointments(LocalDateTime timestamp, LocalDateTime timestamp2) throws Exception {
 		return appointmentRepo.findAllByTimestampBetween(timestamp, timestamp2);
+	}
+
+	@Override
+	public List<Appointment> findTodayAppointmentsOscar(LocalDate timestamp, LocalDate timestamp2) throws Exception{
+		return appointmentRepo.findAllByTimestampToday(timestamp, timestamp2);
 	}
 	
 	@Override

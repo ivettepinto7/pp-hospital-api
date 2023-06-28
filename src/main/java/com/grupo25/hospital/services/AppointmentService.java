@@ -1,5 +1,6 @@
 package com.grupo25.hospital.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +22,10 @@ public interface AppointmentService {
 	void registerSInmu(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type, Person person) throws Exception;
 	void registerSArea(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type,Area area, Person person) throws Exception;
 	void registerSTest(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type,Test test, Person person) throws Exception;
+
 	List<Appointment> findTodayAppointments(LocalDateTime timestamp,LocalDateTime timestamp2) throws Exception;
+
+	List<Appointment> findTodayAppointmentsOscar(LocalDate timestamp, LocalDate timestamp2) throws Exception;
 	
 	List<Appointment> getPrevAppointments(Long id_patient) throws Exception;
 	
