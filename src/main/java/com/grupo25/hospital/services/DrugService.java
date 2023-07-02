@@ -12,5 +12,8 @@ public interface DrugService {
 	void delete(Drug drug) throws Exception;
 	Drug findOneById(Long id) throws Exception;
 	Drug findOneByIdentifier(String name) throws Exception;
-	List<Drug> findAll() throws Exception;
+	static List<Drug> findAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

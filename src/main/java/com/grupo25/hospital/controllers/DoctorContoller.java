@@ -29,12 +29,14 @@ import com.grupo25.hospital.models.dtos.ExpedienteDTO;
 import com.grupo25.hospital.models.dtos.MessageDTO;
 import com.grupo25.hospital.models.dtos.UpdatePassDTO;
 import com.grupo25.hospital.models.entities.Appointment;
+import com.grupo25.hospital.models.entities.Drug;
 import com.grupo25.hospital.models.entities.Person;
 import com.grupo25.hospital.models.entities.Prescription;
 import com.grupo25.hospital.repositories.AppointmentRepository;
 import com.grupo25.hospital.repositories.DrugRepository;
 import com.grupo25.hospital.repositories.PrescriptionRepository;
 import com.grupo25.hospital.services.AppointmentService;
+import com.grupo25.hospital.services.DrugService;
 import com.grupo25.hospital.services.PersonService;
 
 @RestController
@@ -55,6 +57,23 @@ public class DoctorContoller {
 	
 	@Autowired
 	private DrugRepository drugRepository;
+	
+	@GetMapping("/drugs")
+	public ResponseEntity<?> getAllDrugs(){
+		try {
+			List<Drug> drugs = DrugService.findAll();
+			
+			return new ResponseEntity<>(
+						drugs,
+						HttpStatus.OK
+					);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+						null,
+						HttpStatus.INTERNAL_SERVER_ERROR
+					);
+		}
+	}
 	
 	@GetMapping("/appointments/today")
 	public ResponseEntity<?> getTodayAppointments(){
