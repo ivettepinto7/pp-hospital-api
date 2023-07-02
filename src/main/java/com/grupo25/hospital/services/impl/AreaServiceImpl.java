@@ -48,8 +48,10 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void update(EditAreaDTO areaInfo, Area area) throws Exception {
+	public void update(EditAreaDTO areaInfo, Area area, Shift shift) throws Exception {
 		if(areaInfo.getName() != null) area.setName(areaInfo.getName());
+		
+		if(areaInfo.getId_shift() != null) area.setId_shift(shift);
 		
 		areaRepository.save(area);
 	}

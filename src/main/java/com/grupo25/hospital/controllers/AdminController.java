@@ -304,7 +304,7 @@ public class AdminController {
 			
 			Shift foundShift = shiftService.findOneById(areaInfo.getId_shift());
 			
-			if(foundShift != null) {
+			if(foundShift == null) {
 				return new ResponseEntity<>(
 						new MessageDTO("Turno no encontrado"),
 						HttpStatus.NOT_FOUND);
@@ -337,17 +337,16 @@ public class AdminController {
 			
 			Area foundArea = areaService.findOneById(areaInfo.getId());
 			
-			if(foundArea != null) {
-				/*Area existArea = areaService.findOneByIdentifier(areaInfo.getName());
-				
-				if(existArea != null) {
-					return new ResponseEntity<>(
-							new MessageDTO("Está area ya existe"),
-							HttpStatus.BAD_REQUEST
-							);
-				}*/
-				
-				areaService.update(areaInfo, foundArea);
+			Shift foundShift = shiftService.findOneById(areaInfo.getId_shift());
+			
+			if(foundShift == null) {
+				return new ResponseEntity<>(
+						new MessageDTO("Turno no encontrado"),
+						HttpStatus.NOT_FOUND);
+			}
+			
+			if(foundArea != null && foundShift != null) {
+				areaService.update(areaInfo, foundArea,foundShift);
 				return new ResponseEntity<>(
 						new MessageDTO("Área actualizada"),
 						HttpStatus.OK
