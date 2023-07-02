@@ -9,7 +9,7 @@ import com.grupo25.hospital.models.entities.Shift;
 
 public interface AreaService {
 	void insert(CreateAreaDTO areaInfo, Shift shift) throws Exception;
-	void update(EditAreaDTO areaInfo, Area area) throws Exception;
+	void update(EditAreaDTO areaInfo, Area area, Shift shift) throws Exception;
 	void delete(Area area) throws Exception;
 	Area findOneById(Long id) throws Exception;
 	Area findOneByIdentifier(String name) throws Exception;
