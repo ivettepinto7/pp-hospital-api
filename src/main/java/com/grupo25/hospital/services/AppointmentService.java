@@ -1,6 +1,5 @@
 package com.grupo25.hospital.services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,18 +18,22 @@ public interface AppointmentService {
 	void registerArea(ScheduleAppointmentDTO newSchedule,Appointment_type type,Area area, Person person) throws Exception;
 	void registerTest(ScheduleAppointmentDTO newSchedule,Appointment_type type,Test test, Person person) throws Exception;
 	
-	void registerSInmu(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type, Person person) throws Exception;
+	void registerSInmu(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type,Vaccine vaccine, Person person) throws Exception;
 	void registerSArea(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type,Area area, Person person) throws Exception;
 	void registerSTest(SecretaryScheduleAppointmentDTO newSchedule,Appointment_type type,Test test, Person person) throws Exception;
-
+	void endUpAppointment(Appointment appointment) throws Exception;
+	void insertAppointmentDetails(Appointment appointment, String details) throws Exception;
 	List<Appointment> findTodayAppointments(LocalDateTime timestamp,LocalDateTime timestamp2) throws Exception;
-
-	List<Appointment> findTodayAppointmentsOscar(LocalDate timestamp, LocalDate timestamp2) throws Exception;
 	
 	List<Appointment> getPrevAppointments(Long id_patient) throws Exception;
 	
 	List<Appointment> getNextAppointments(Long id_patient) throws Exception;
 	
 	List<Appointment> getAllAppointments(Long id_patient) throws Exception;
+	
+	static Appointment getById(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

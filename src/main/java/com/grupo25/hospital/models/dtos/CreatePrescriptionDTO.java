@@ -1,48 +1,50 @@
 package com.grupo25.hospital.models.dtos;
 
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 public class CreatePrescriptionDTO {
-	private int id_paciente;
-	private String nombre;
-	private int cantidad_diaria;
-	private int cantidad;
-	private String indicacion;
-	public CreatePrescriptionDTO(int id_paciente, String nombre, int cantidad_diaria, int cantidad, String indicacion) {
+	@NotNull
+	private Long id_appointment;
+	
+	private List<PrescriptionDTO> medicines;
+	
+	private String indication;
+
+	public CreatePrescriptionDTO() {
 		super();
-		this.id_paciente = id_paciente;
-		this.nombre = nombre;
-		this.cantidad_diaria = cantidad_diaria;
-		this.cantidad = cantidad;
-		this.indicacion = indicacion;
 	}
-	public int getId_paciente() {
-		return id_paciente;
+
+	public CreatePrescriptionDTO(@NotNull Long id_appointment, List<PrescriptionDTO> medicines, String indication) {
+		super();
+		this.id_appointment = id_appointment;
+		this.medicines = medicines;
+		this.indication = indication;
 	}
-	public void setId_paciente(int id_paciente) {
-		this.id_paciente = id_paciente;
+
+	public Long getId_appointment() {
+		return id_appointment;
 	}
-	public String getNombre() {
-		return nombre;
+
+	public void setId_appointment(Long id_appointment) {
+		this.id_appointment = id_appointment;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public List<PrescriptionDTO> getMedicines() {
+		return medicines;
 	}
-	public int getCantidad_diaria() {
-		return cantidad_diaria;
+
+	public void setMedicines(List<PrescriptionDTO> medicines) {
+		this.medicines = medicines;
 	}
-	public void setCantidad_diaria(int cantidad_diaria) {
-		this.cantidad_diaria = cantidad_diaria;
+
+	public String getIndication() {
+		return indication;
 	}
-	public int getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-	public String getIndicacion() {
-		return indicacion;
-	}
-	public void setIndicacion(String indicacion) {
-		this.indicacion = indicacion;
+
+	public void setIndication(String indication) {
+		this.indication = indication;
 	}
 	
 	
