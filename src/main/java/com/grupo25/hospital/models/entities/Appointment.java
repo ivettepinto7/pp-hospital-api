@@ -63,11 +63,11 @@ public class Appointment {
 	@JoinColumn(name = "id_test", nullable = true)
 	private Test id_test;
 	
-	/*
-	 * @ManyToOne(fetch = FetchType.EAGER)
-	 * 
-	 * @JoinColumn(name = "id_vaccine", nullable = true) private Vaccine id_vaccine;
-	 */
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	 
+	@JoinColumn(name = "id_vaccine", nullable = true) private Vaccine id_vaccine;
+	
 	
 	@OneToMany(mappedBy = "id_appointment", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
 	@JsonIgnore
@@ -202,14 +202,14 @@ public class Appointment {
 
 
 
-	/*
-	 * public Vaccine getId_vaccine() { return id_vaccine; }
-	 * 
-	 * 
-	 * 
-	 * public void setId_vaccine(Vaccine id_vaccine) { this.id_vaccine = id_vaccine;
-	 * }
-	 */
+	
+	 public Vaccine getId_vaccine() { return id_vaccine; }
+	  
+	  
+	  
+	  public void setId_vaccine(Vaccine id_vaccine) { this.id_vaccine = id_vaccine;
+	 }
+	 
 
 
 
