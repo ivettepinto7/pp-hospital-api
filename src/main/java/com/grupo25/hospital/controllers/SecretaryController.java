@@ -3,7 +3,6 @@ package com.grupo25.hospital.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,14 +157,13 @@ public class SecretaryController {
 					);
 		}
 	}
-
+	
 	@GetMapping("/appointments/today")
-	public ResponseEntity<?> getTodayAppointments() throws Exception{
-		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		 LocalDate timestamp = LocalDate.now();
-		 LocalDate timestamp2 = timestamp.plusDays(1);
+	public ResponseEntity<?> getTodayAppointments(){
+		LocalDateTime timestamp = (LocalDate.now().atStartOfDay());
+		LocalDateTime timestamp2 = (timestamp.plusDays(1)).truncatedTo(ChronoUnit.DAYS);
 		try {
-			List<Appointment> appointments = appointmentService.findTodayAppointmentsOscar(timestamp, timestamp2);
+			List<Appointment> appointments = appointmentService.findTodayAppointments(timestamp.truncatedTo(ChronoUnit.DAYS), timestamp2);
 			
 			if(appointments.size() == 0) {
 				return new ResponseEntity<>(
@@ -179,12 +177,10 @@ public class SecretaryController {
 					HttpStatus.OK
 				);
 		} catch (Exception e) {
-			System.out.println("ERRRRRRRRRRROR"+e+"--");
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	
 	@PostMapping("/schedule-appointment")
 	public ResponseEntity<?> bookAppointment(@Valid @RequestBody SecretaryScheduleAppointmentDTO newSchedule,BindingResult result){
@@ -211,7 +207,7 @@ public class SecretaryController {
 			if(type.getId_appointment_type() == 1) {
 				Vaccine vaccine = vaccService.findOneById(newSchedule.getIdVAT());
 				
-				appointmentService.registerSInmu(newSchedule, type, foundPerson);
+				appointmentService.registerSInmu(newSchedule, type, vaccine, foundPerson);
 				
 				return new ResponseEntity<MessageDTO>(
 						new MessageDTO("Cita agendada"),
@@ -246,7 +242,6 @@ public class SecretaryController {
 				);
 			
 		} catch (Exception e) {
-			System.out.println(e);
 			return new ResponseEntity<>(
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -286,6 +281,20 @@ public class SecretaryController {
 				);
 		}
 	}
+
+	/*@GetMapping("/citas-dia")
+	public ResponseEntity<List<CitasDiaDTO>> getDayAppointments(BindingResult result){
+		try {
+			//TODO implementar logica de obtener usuarios
+			List<CitasDiaDTO> listaUsers= new ArrayList<>();
+			return new ResponseEntity<List<CitasDiaDTO>>(
+					listaUsers,
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}*/
 	
 	@GetMapping("/citas-dia/consulta/expediente/{id}")
 	public ResponseEntity<List<ExpedienteDTO>> getUserExpedienteSecretary(@PathVariable Long id){
