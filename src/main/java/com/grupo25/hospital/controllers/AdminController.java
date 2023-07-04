@@ -675,7 +675,7 @@ public class AdminController {
 	@GetMapping("/drugs")
 	public ResponseEntity<?> getAllDrugs(){
 		try {
-			List<Drug> drugs = DrugService.findAll();
+			List<Drug> drugs = drugService.findAll();
 			
 			return new ResponseEntity<>(
 						drugs,

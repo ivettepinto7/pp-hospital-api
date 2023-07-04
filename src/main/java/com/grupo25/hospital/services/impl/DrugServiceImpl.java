@@ -58,6 +58,7 @@ public class DrugServiceImpl implements DrugService {
 		return drugRepo.findByName(name);
 	}
 
+	@Override
 	public List<Drug> findAll() throws Exception {
 		return drugRepo.findAll();
 	}

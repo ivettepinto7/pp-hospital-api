@@ -10,13 +10,7 @@ public interface DrugService {
 	void insert(CreateDrugDTO drugInfo) throws Exception;
 	void update(EditDrugDTO drugInfo, Drug drug) throws Exception;
 	void delete(Drug drug) throws Exception;
-	static Drug findOneById(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	Drug findOneById(Long id) throws Exception;
 	Drug findOneByIdentifier(String name) throws Exception;
-	static List<Drug> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	List<Drug> findAll() throws Exception;
 }
