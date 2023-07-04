@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.grupo25.hospital.models.dtos.EndAppointmentDTO;
 import com.grupo25.hospital.models.dtos.ScheduleAppointmentDTO;
 import com.grupo25.hospital.models.dtos.SecretaryScheduleAppointmentDTO;
 import com.grupo25.hospital.models.entities.Appointment;
@@ -194,8 +195,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void endUpAppointment(Appointment appointment) throws Exception {
+	public void endUpAppointment(Appointment appointment,EndAppointmentDTO details,Person doctor) throws Exception {
 		appointment.setStatus(true);
+		if(details.getDescription() != null) appointment.setAppointment_details(details.getDescription());
+		appointment.setId_doctor(doctor);
 		appointmentRepo.save(appointment);
 	}
 

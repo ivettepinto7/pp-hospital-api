@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grupo25.hospital.models.dtos.CreatePrescriptionDTO;
+import com.grupo25.hospital.models.dtos.PrescriptionDTO;
 import com.grupo25.hospital.models.dtos.PrescriptionInfoDTO;
 import com.grupo25.hospital.models.entities.Appointment;
 import com.grupo25.hospital.models.entities.Drug;
@@ -64,6 +65,19 @@ public class PrescriptionServiceImpl implements PrescriptionService{
 		
 		
 		return allPrescriptions;
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void create(Drug drug, PrescriptionDTO prescription, Appointment appointment) throws Exception {
+		Prescription presc = new Prescription();
+		presc.setId_appointment(appointment);
+		presc.setId_drug(drug);
+		presc.setIndication(prescription.getIndication());
+		presc.setDaily_amount(prescription.getDoses());
+		presc.setQuantity(prescription.getQuantity());
+		
+		prescriptionRepository.save(presc);	
 	}
 
 
