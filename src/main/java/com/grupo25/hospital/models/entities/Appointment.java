@@ -65,8 +65,8 @@ public class Appointment {
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	 
-	@JoinColumn(name = "id_vaccine", nullable = true) private Vaccine id_vaccine;
+	@JoinColumn(name = "id_vaccine", nullable = true) 
+	private Vaccine id_vaccine;
 	
 	
 	@OneToMany(mappedBy = "id_appointment", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
@@ -87,7 +87,7 @@ public class Appointment {
 		this.id_inmunization = id_inmunization;
 		this.id_area = id_area;
 		this.id_test = id_test;
-		//this.id_vaccine = id_vaccine;
+		this.id_vaccine = id_vaccine;
 	}
 
 	

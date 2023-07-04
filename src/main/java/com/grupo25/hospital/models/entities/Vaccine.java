@@ -32,6 +32,10 @@ public class Vaccine {
 	@JsonIgnore
 	private List<Inmunization> inmunizations;
 	
+	@OneToMany(mappedBy = "id_vaccine", fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
+	@JsonIgnore
+	private List<Appointment> appointments;
+	
 	public Vaccine() {
 		super();
 	}
@@ -73,5 +77,15 @@ public class Vaccine {
 	public void setInmunizations(List<Inmunization> inmunizations) {
 		this.inmunizations = inmunizations;
 	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
+	
 	
 }
