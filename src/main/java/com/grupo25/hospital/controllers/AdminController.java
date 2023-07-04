@@ -153,7 +153,7 @@ public class AdminController {
 						HttpStatus.BAD_REQUEST);
 			}
 			
-			mailService.sendWelcomeEmail(personInfo.getEmail(), personInfo.getUsername());
+			//mailService.sendWelcomeEmail(personInfo.getEmail(), personInfo.getUsername());
 			Role foundRole = roleService.findOneById(personInfo.getRole());
 			
 			if(personInfo.getArea() == null) {
